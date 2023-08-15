@@ -138,13 +138,13 @@ async def pm_text(bot, message):
     if user_id in ADMINS:
         return  # ignore admins
     
-    reply_text = "<b>Join Our **𝙿𝚄𝙱𝙻𝙸𝙲 𝙶𝚁𝙾𝚄𝙿** For Send Movie Name in Group Bot Reply Movies\nIf You Want Private Search Movies Join Our **𝙿𝙼 𝚂𝙴𝙰𝚁𝙲𝙷** Bot Send Movies Name in Bot Bot Reply Movies\nIf Any Bot Are Down Check Alternative In **𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂* Official Channel</b>"
+    reply_text = "<b>Join Our **𝙿𝚄𝙱𝙻𝙸𝙲 𝙶𝚁𝙾𝚄𝙿** For Send Movie Name in Group Bot Reply Movies\n\nIf You Want Private Search Movies Join Our **𝙿𝙼 𝚂𝙴𝙰𝚁𝙲𝙷** Bot Send Movies Name in Bot Bot Reply Movies\n\nIf Any Bot Are Down Check Alternative In **𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂** Official Channel</b>"
     
     # Create buttons for the reply message
     buttons = [
         [
             InlineKeyboardButton("𝙿𝚄𝙱𝙻𝙸𝙲 𝙶𝚁𝙾𝚄𝙿", url="https://t.me/iPapkornMoviesGroup"),
-            InlineKeyboardButton("𝙿𝙼 𝚂𝙴𝙰𝚁𝙲𝙷", url="https://t.me/iPepkornBot")
+            InlineKeyboardButton("𝙿𝙼 𝚂𝙴𝙰𝚁𝙲𝙷", url="https://t.me/iPepkornBot?start")
         ],
         [
             InlineKeyboardButton("𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂", url="https://t.me/iPepkornBots/8")
@@ -166,9 +166,9 @@ async def pm_text(bot, message):
     await bot.send_message(
         chat_id=LOG_CHANNEL_PM,
         text=f"<b>#PM_MSG\n\nName: {user}\n\nID: {user_id}\n\nMessage: {content}</b>",
-        reply_markup=keyboard,        
+        reply_markup=keyboard,      
+        quote=quote,
     )
-
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
