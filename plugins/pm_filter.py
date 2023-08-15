@@ -595,22 +595,21 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         await Joel_tgx.delete()
                         await file_send.delete()
                 else:
-                    await query.answer(f"Hᴇʏ {query.from_user.first_name}, Tʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ. Rᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
-                await query.answer('Cʜᴇᴄᴋ PM, I ʜᴀᴠᴇ sᴇɴᴛ ғɪʟᴇs ɪɴ PM', show_alert=True)
+                    return await query.answer(f"Hey {query.from_user.first_name}, this is not your movie request. Request yours!", show_alert=True)
         except UserIsBlocked:
-            await query.answer('𝐔𝐧𝐛𝐥𝐨𝐜𝐤 𝐭𝐡𝐞 𝐛𝐨𝐭 𝐦𝐚𝐡𝐧 !', show_alert=True)
+            await query.answer('Unblock the bot!', show_alert=True)
         except PeerIdInvalid:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
-            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")            
+            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
-            await query.answer("𝑰 𝑳𝒊𝒌𝒆 𝒀𝒐𝒖𝒓 𝑺𝒎𝒂𝒓𝒕𝒏𝒆𝒔𝒔, 𝑩𝒖𝒕 𝑫𝒐𝒏'𝒕 𝑩𝒆 𝑶𝒗𝒆𝒓𝒔𝒎𝒂𝒓𝒕 😒\n@iPepkornBots", show_alert=True)
+            await query.answer("Join our backup channel, mahnn! 😒", show_alert=True)
             return
-        ident, file_id = query.data.split("#")
+        ident, file_id = query.data.split("#")        
         files_ = await get_file_details(file_id)
         if not files_:
-            return await query.answer('No such file exist.')
+            return await query.answer('No such file exists.')
         files = files_[0]
         title = files.file_name
         size = get_size(files.file_size)
@@ -626,11 +625,23 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if f_caption is None:
             f_caption = f"{title}"
         await query.answer()
-        await client.send_cached_media(
-            chat_id=query.from_user.id,
+        file_send = await client.send_cached_media(
+            chat_id=FILE_CHANNEL,
             file_id=file_id,
-            caption=f_caption,
-            protect_content=True if ident == 'checksubp' else False
+            caption=script.CHANNEL_CAP.format(query.from_user.mention, title, query.message.chat.title),
+            protect_content=True if ident == 'checksubp' else False,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("⚠️ हिंदी", callback_data="hin"),
+                        InlineKeyboardButton("⚠️ தமிழ்", callback_data="tam"),
+                        InlineKeyboardButton("⚠️ తెలుగు", callback_data="tel")
+                    ],
+                    [
+                        InlineKeyboardButton("🔥 𝚄𝙿𝙳𝙰𝚃𝙴 𝙲𝙷𝙰𝙽𝙽𝙴𝙻 🔥", url=(MAIN_CHANNEL))
+                    ], 
+                ]
+            )
         )
     elif query.data == "predvd":
         files, next_offset, total = await get_bad_files('predvd', offset=0)
