@@ -251,14 +251,13 @@ Total Chats: <code>{i}</code>
 MongoDB Size: <code>{j}</code> MIB
 Free MongoDB Space: <code>{k}</code> 𝙼𝚒𝙱</b>"""
 
-    BOT_LIST = """
+    BOTLIST_TXT = """
 <b>⍟───[ More Bots ]───⍟
     
-• My name: <a href="https://t.me/PremiumMHBot?start">PremiumMHBot</a> 🤖
-• Bot Two: <a href="https://t.me/Movies_Hole_Robot?start">Movies Hole Bot</a> 🎥
-• Bot Three: <a href="https://t.me/iPopkonBot?start">iPapkornBot</a> 🍿
-• Bot Four: <a href="https://t.me/HDCinemasBot?start">HDCinemasBot</a> 🎬
-• Bot Fifth: <a href="https://t.me/TrueDealsMasterBot?start">TrueDealsMasterBot</a> 💰</b>"""
+• Bot One: <a href="https://t.me/Movies_Hole_Robot?start">Movies Hub Bot</a> 🎥
+• Bot Two: <a href="https://t.me/iPepkornBot?start">iPapkornBot</a> 🍿
+• Bot Three: <a href="https://t.me/HDCinemasBot?start">HDCinemasBot</a> 🎬
+• Bot Four: <a href="https://t.me/TrueDealsMasterBot?start">TrueDealsMasterBot</a> 💰</b>"""
 
     CARB_TXT = """<b>Help</b> : 𝗖𝗔𝗥𝗕𝗢𝗡
 𝙲𝙰𝚁𝙱𝙾𝙽 𝙸𝚂 𝙰 𝙵𝙴𝚄𝚃𝚄𝚁𝙴 𝚃𝙾 𝙼𝙰𝙺𝙴 𝚃𝙷𝙴 𝙸𝙼𝙰𝙶𝙴 𝙰𝚂 𝚂𝙷𝙾𝚆𝙽 𝙸𝙽 𝚃𝙷𝙴 𝚃𝙾𝙿 𝚆𝙸𝚃𝙷 𝚈𝙾𝚄𝚁𝙴 𝚃𝙴𝚇𝚃𝚂.
