@@ -31,7 +31,9 @@ from utils import get_settings, get_size, is_subscribed, save_group_settings, te
 
 
 logger = logging.getLogger(__name__)
+
 BATCH_FILES = {}
+RESULTS_PER_PAGE = 10
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
