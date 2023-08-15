@@ -2,6 +2,7 @@ import re
 import os
 from os import environ
 from pyrogram import enums
+from time import time
 from Script import script
 
 import asyncio
