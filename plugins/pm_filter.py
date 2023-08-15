@@ -913,7 +913,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     InlineKeyboardButton("➕️ 𝙰𝙳𝙳 𝙼𝙴 𝚃𝙾 𝚈𝙾𝚄𝚁 𝙶𝚁𝙾𝚄𝙿 ➕️", url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],
                 [
-                    InlineKeyboardButton("🔍 𝚂𝙴𝙰𝚁𝙲𝙷 🔍", switch_inline_query_current_chat=''),
+                    InlineKeyboardButton("🔍 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🔍", callback_data="bots"),
                     InlineKeyboardButton("📢 𝚄𝙿𝙳𝙰𝚃𝙴𝚂 📢", url="https://t.me/iPapkornUpdate")
                 ],
                 [
@@ -1028,7 +1028,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-    
+    elif query.data == "bots":
+        buttons = [
+            [
+                InlineKeyboardButton('⬅️ 𝙱𝙰𝙲𝙺', callback_data='start'),
+                InlineKeyboardButton('𝙱𝙾𝚃𝚂 𝙲𝙷𝙰𝙽𝙽𝙴𝙻 🤖', url='https://t.me/iPepkornBots/8'),
+            ]
+        ]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(
+            text=script.SOURCE_TXT,
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML
+        )
     elif query.data == "about":
         buttons = [
             [
