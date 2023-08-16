@@ -333,9 +333,9 @@ Free MongoDB Space: <code>{k}</code> 𝙼𝚒𝙱</b>"""
     MVE_NT_FND = """<b>ᴛʜɪꜱ ᴍᴏᴠɪᴇ ɪꜱ ɴᴏᴛ ʏᴇᴛ  ʀᴇʟᴇᴀꜱᴇᴅ ᴏʀ ᴀᴅᴅᴇᴅ ᴛᴏ ᴅᴀᴛᴀʙᴀꜱᴇ</b> """
 
     REQ_TEXT = """ #REQUESTED_CONTENT
-📝**Content Name**:{search}
-**Requested By**: {message.from_user.first_name}
-**USER ID**: {user_id}"""
+**USER ID**: <b>{}</b>
+**Requested By**: <b>{}</b>
+📝**Content Name**: <b>{}</b>"""
 
     REPLY_TEXT = """𝙷𝚎𝚢 `{message.from_user.first_name}` 😎,
 ʏᴏᴜʀ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴛ ᴛᴏ ᴏᴜʀ **ᴀᴅᴍɪɴ'ꜱ ᴅᴀꜱʜʙᴏᴀʀᴅ** !
