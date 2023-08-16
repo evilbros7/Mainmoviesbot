@@ -348,21 +348,23 @@ async def advantage_spoll_choker(bot, query):
         else:
             reqstr1 = query.from_user.id if query.from_user else 0
             reqstr = await bot.get_users(reqstr1)
+            search = movie
+            requested_movie = search.strip()      
             await bot.send_message(
                 chat_id=REQ_CHANNEL,
                 text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, movie)),
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                            InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
                         ],
                         [
-                            InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
-                            InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                            InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
+                            InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
                         ],
                         [
-                            InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
-                            InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                            InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
+                            InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
                         ],
                     ]
                 )
@@ -1965,6 +1967,7 @@ async def auto_filter(client, msg, spoll=False):
             return
         if len(message.text) < 100:
             search = message.text
+            requested_movie = search.strip()            
             files, offset, total_results = await get_search_results(search.lower(), offset=0, filter=True)
             if not files:
                 if settings["spell_check"]:
@@ -1976,15 +1979,15 @@ async def auto_filter(client, msg, spoll=False):
                         reply_markup=InlineKeyboardMarkup(
                             [
                                 [
-                                    InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                                    InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
                                 ],
                                 [
-                                    InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
-                                    InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                                    InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
+                                    InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
                                 ],
                                 [
-                                    InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
-                                    InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                                    InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
+                                    InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
                                 ],
                             ]
                         )
@@ -2223,20 +2226,22 @@ async def advantage_spell_chok(client, msg):
     except Exception as e:
         logger.exception(e)
         await client.send_message(
+            search = query
+            requested_movie = search.strip()            
             chat_id=REQ_CHANNEL,
             text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
                     ],
                     [
-                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
-                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
+                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
                     ],
                     [
-                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
-                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
+                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
                     ],
                 ]
             )
@@ -2270,15 +2275,15 @@ async def advantage_spell_chok(client, msg):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
                     ],
                     [
-                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
-                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
+                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
                     ],
                     [
-                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
-                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
+                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
                     ],
                 ]
             )
