@@ -1993,7 +1993,7 @@ async def auto_filter(client, msg, spoll=False):
                         )
                     )
                     
-                    k = await message.reply_text(
+                    l = await message.reply_text(
                         text=(script.REPLY_TEXT.format(reqstr.id, reqstr.mention, search)),
                         reply_markup=InlineKeyboardMarkup(
                             [
@@ -2005,7 +2005,7 @@ async def auto_filter(client, msg, spoll=False):
                         )
                     )
                     await asyncio.sleep(20)
-                    await k.delete()
+                    await l.delete()
                     return
         else:
             return
