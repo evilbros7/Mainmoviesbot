@@ -385,6 +385,7 @@ async def advantage_spoll_choker(bot, query):
 @Client.on_callback_query()
 async def cb_handler(client: Client, query: CallbackQuery):
     is_admin = query.from_user.id in ADMINS
+    data = query.data
     if query.data == "close_data":
         await query.message.delete()
     elif query.data == "delallconfirm":
@@ -1275,8 +1276,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "bot_status":
         buttons = [
             [
-                InlineKeyboardButton('𝙻𝙾𝙶𝚂', url='https://t.me/iPepkornBots'),
                 InlineKeyboardButton('𝙷𝙾𝙼𝙴', callback_data='start'),
+                InlineKeyboardButton('𝚁𝙴𝙵𝚁𝙴𝚂𝙷', callback_data='botfrsh'),
             ]
         ]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1989,7 +1990,7 @@ async def auto_filter(client, msg, spoll=False):
                         )
                     )
                     
-                    l = await message.reply_text(
+                    k = await message.reply_text(
                         text=(script.REPLY_TEXT.format(reqstr.id, reqstr.mention, search)),
                         reply_markup=InlineKeyboardMarkup(
                             [
@@ -2001,7 +2002,7 @@ async def auto_filter(client, msg, spoll=False):
                         )
                     )
                     await asyncio.sleep(20)
-                    await l.delete()
+                    await k.delete()
                     return
         else:
             return
