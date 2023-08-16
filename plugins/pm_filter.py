@@ -691,6 +691,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ]
             )
         )
+        if settings['auto_delete']:
+            await asyncio.sleep(600)
+            await file_send.delete()
     elif query.data == "predvd":
         files, next_offset, total = await get_bad_files('predvd', offset=0)
         if total > 0:
