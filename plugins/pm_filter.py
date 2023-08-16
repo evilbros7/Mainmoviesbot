@@ -2221,13 +2221,13 @@ async def advantage_spell_chok(client, msg):
         "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
     RQST = query.strip()
     query = query.strip() + " movie"
+    search = query
+    requested_movie = search.strip() 
     try:
         movies = await get_poster(mv_rqst, bulk=True)
     except Exception as e:
         logger.exception(e)
         await client.send_message(
-            search = query
-            requested_movie = search.strip()            
             chat_id=REQ_CHANNEL,
             text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
             reply_markup=InlineKeyboardMarkup(
