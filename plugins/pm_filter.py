@@ -347,8 +347,37 @@ async def advantage_spoll_choker(bot, query):
         else:
             reqstr1 = query.from_user.id if query.from_user else 0
             reqstr = await bot.get_users(reqstr1)
-            await bot.send_message(chat_id=LOG_CHANNEL_PM, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, movie)))
-            k = await query.message.edit(script.MVE_NT_FND)
+            await bot.send_message(
+                chat_id=REQ_CHANNEL,
+                text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, movie)),
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                        ],
+                        [
+                            InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
+                            InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                        ],
+                        [
+                            InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
+                            InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                        ],
+                    ]
+                )
+            )
+            
+            k = await query.message.edit(
+                text=(script.MVE_NT_FND.format(reqstr.id, reqstr.mention, search)),
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton("📋 𝚄𝙿𝙳𝙰𝚃𝙴 📋", url=f"https://t.me/iPapkornUpdate"),
+                            InlineKeyboardButton("🤖 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🤖", url=f"https://t.me/iPepkornBots/8")
+                        ]
+                    ]
+                )
+            )
             await asyncio.sleep(10)
             await k.delete()
 
@@ -1618,7 +1647,39 @@ async def auto_filter(client, msg, spoll=False):
                 if settings["spell_check"]:
                     return await advantage_spell_chok(client, msg)
                 else:
-                    await client.send_message(chat_id=LOG_CHANNEL_PM, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, search)))
+                    await client.send_message(
+                        chat_id=REQ_CHANNEL,
+                        text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, search)),
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                                ],
+                                [
+                                    InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
+                                    InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                                ],
+                                [
+                                    InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
+                                    InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                                ],
+                            ]
+                        )
+                    )
+                    
+                    l = await message.reply_text(
+                        text=(script.REPLY_TEXT.format(reqstr.id, reqstr.mention, search)),
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton("📋 𝚄𝙿𝙳𝙰𝚃𝙴 📋", url=f"https://t.me/iPapkornUpdate"),
+                                    InlineKeyboardButton("🤖 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🤖", url=f"https://t.me/iPepkornBots/8")
+                                ]
+                            ]
+                        )
+                    )
+                    await asyncio.sleep(20)
+                    await l.delete()
                     return
         else:
             return
@@ -1838,26 +1899,75 @@ async def advantage_spell_chok(client, msg):
         movies = await get_poster(mv_rqst, bulk=True)
     except Exception as e:
         logger.exception(e)
-        await client.send_message(chat_id=LOG_CHANNEL_PM, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
-        k = await msg.reply(script.I_CUDNT.format(reqstr.mention))
-        await asyncio.sleep(8)
+        await client.send_message(
+            chat_id=REQ_CHANNEL,
+            text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
+                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
+                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                    ],
+                ]
+            )
+        )
+        
+        k = await msg.reply(
+        text=(script.I_CUDNT.format(reqstr.mention)),
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("📋 𝚄𝙿𝙳𝙰𝚃𝙴 📋", url=f"https://t.me/iPapkornUpdate"),
+                        InlineKeyboardButton("🤖 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🤖", url=f"https://t.me/iPepkornBots/8")
+                    ]
+                ]
+            )
+        )
+        await asyncio.sleep(10)
         await k.delete()
         return
     movielist = []
     if not movies:
         reqst_gle = mv_rqst.replace(" ", "+")
-        button = [[
-                   InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
-        ]]
-        await client.send_message(chat_id=LOG_CHANNEL_PM, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
-        k = await msg.reply_photo(
-            photo=SPELL_IMG, 
-            caption=script.I_CUDNT.format(mv_rqst),
-            reply_markup=InlineKeyboardMarkup(button)
+        button = [
+            [
+                InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
+            ]
+        ]
+        await client.send_message(
+            chat_id=REQ_CHANNEL,
+            text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{user_id}:{requested_movie}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{user_id}:{requested_movie}"),
+                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{user_id}:{requested_movie}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{user_id}:{requested_movie}"),
+                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{user_id}:{requested_movie}")
+                    ],
+                ]
+            )
         )
-        await asyncio.sleep(30)
-        await k.delete()
-        return
+        k = await msg.reply_photo(
+        photo=SPELL_IMG, 
+        caption=script.I_CUDNT.format(mv_rqst),
+        reply_markup=InlineKeyboardMarkup(button)
+    )
+    await asyncio.sleep(30)
+    await k.delete()
+    return
     movielist += [movie.get('title') for movie in movies]
     movielist += [f"{movie.get('title')} {movie.get('year')}" for movie in movies]
     SPELL_CHECK[mv_id] = movielist
