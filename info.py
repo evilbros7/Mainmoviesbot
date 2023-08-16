@@ -108,6 +108,7 @@ MSG_ALRT = environ.get('MSG_ALRT', '𝑪𝑯𝑬𝑪𝑲 & 𝑻𝑹𝒀 𝑨𝑳
 FILE_CHANNEL = int(environ.get('FILE_CHANNEL', 0))
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', 0))
 LOG_CHANNEL_PM = int(environ.get('LOG_CHANNEL_PM', 0))
+REQ_CHANNEL = int(environ.get('REQ_CHANNEL', 0))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'iPapkornSupportGroup')
 AUTO_DELETE = is_enabled((environ.get('AUTO_DELETE', "True")), True)
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "False")), False)
