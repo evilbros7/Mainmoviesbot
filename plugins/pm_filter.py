@@ -2217,54 +2217,61 @@ async def auto_filter(client, msg, spoll=False):
 async def advantage_spell_chok(client, msg):
     mv_id = msg.id
     mv_rqst = msg.text
-    reqstr1 = msg.from_user.id if msg.from_user else 0
-    reqstr = await client.get_users(reqstr1)
-    settings = await get_settings(msg.chat.id)
-    query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
-        "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
-    RQST = query.strip()
-    query = query.strip() + " movie"
-    search = query
-    requested_movie = search.strip() 
-    try:
-        movies = await get_poster(mv_rqst, bulk=True)
-    except Exception as e:
-        logger.exception(e)
-        await client.send_message(
-            chat_id=REQ_CHANNEL,
-            text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
-                    ],
-                    [
-                        InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
-                        InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
-                    ],
-                    [
-                        InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
-                        InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
-                    ],
-                ]
-            )
-        )
-        
-        k = await msg.reply(
-        text=(script.I_CUDNT.format(reqstr.mention)),
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton("📋 𝚄𝙿𝙳𝙰𝚃𝙴 📋", url=f"https://t.me/iPapkornUpdate"),
-                        InlineKeyboardButton("🤖 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🤖", url=f"https://t.me/iPepkornBots/8")
-                    ]
-                ]
-            )
-        )
-        await asyncio.sleep(10)
-        await k.delete()
-        return
+    k = await manual_filters(client, msg, text=mv_rqst)
+    if k == False:
+        files, offset, total_results = await get_search_results(mv_rqst, offset=0, filter=True)
+        if files:
+            k = (mv_rqst, files, offset, total_results)
+            await auto_filter(client, msg, k)
+        else:
+            reqstr1 = msg.from_user.id if msg.from_user else 0
+            reqstr = await client.get_users(reqstr1)
+            settings = await get_settings(msg.chat.id)
+            query = re.sub(
+                r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+                "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
+            RQST = query.strip()
+            query = query.strip() + " movie"
+            search = query
+            requested_movie = search.strip() 
+            try:
+                movies = await get_poster(mv_rqst, bulk=True)
+            except Exception as e:
+                logger.exception(e)
+                await client.send_message(
+                    chat_id=REQ_CHANNEL,
+                    text=(script.REQ_TEXT.format(reqstr.id, reqstr.mention, mv_rqst)),
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(text="✅Upload Done", callback_data=f"notify_userupl:{reqstr.id}:{requested_movie}")
+                            ],
+                            [
+                                InlineKeyboardButton(text="⚡Already Upl..", callback_data=f"notify_user_alrupl:{reqstr.id}:{requested_movie}"),
+                                InlineKeyboardButton(text="🖊Spell Error", callback_data=f"notify_user_spelling_error:{reqstr.id}:{requested_movie}")
+                            ],
+                            [
+                                InlineKeyboardButton(text="😒Not Available", callback_data=f"notify_user_not_avail:{reqstr.id}:{requested_movie}"),
+                                InlineKeyboardButton(text="❌Reject Req", callback_data=f"notify_user_req_rejected:{reqstr.id}:{requested_movie}")
+                            ],
+                        ]
+                    )
+                )
+                
+                k = await msg.reply(
+                text=(script.I_CUDNT.format(reqstr.mention)),
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("📋 𝚄𝙿𝙳𝙰𝚃𝙴 📋", url=f"https://t.me/iPapkornUpdate"),
+                                InlineKeyboardButton("🤖 𝙼𝙾𝚁𝙴 𝙱𝙾𝚃𝚂 🤖", url=f"https://t.me/iPepkornBots/8")
+                            ]
+                        ]
+                    )
+                )
+                await asyncio.sleep(10)
+                await k.delete()
+                return
     movielist = []
     if not movies:
         reqst_gle = mv_rqst.replace(" ", "+")
