@@ -78,12 +78,14 @@ async def fil_mod(client, message):
     else:
         await m.edit("Usage: /autofilter on OR /autofilter off")
 
-@Client.on_message((filters.group) & filters.text & filters.incoming)
+@Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
-    await global_filters(client, message)
+    if message.chat.id != SUPPORT_CHAT_ID:
+        await global_filters(client, message)
+    
     group_id = message.chat.id
     name = message.text
-
+    
     keywords = await get_filters(group_id)
     for keyword in reversed(sorted(keywords, key=len)):
         pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
@@ -119,13 +121,26 @@ async def give_filter(client, message):
                         )
                 except Exception as e:
                     print(e)
-                break 
+                break
 
     else:
         if FILTER_MODE.get(str(message.chat.id)) == "False":
             return
         else:
             await auto_filter(client, message)
+            
+    manual = await manual_filters(client, message)
+    if not manual:
+        settings = await get_settings(message.chat.id)
+        try:
+            if settings['auto_ffilter']:
+                await auto_filter(client, message)
+        except KeyError:
+            grpid = await active_connection(str(message.from_user.id))
+            await save_group_settings(grpid, 'auto_ffilter', True)
+            settings = await get_settings(message.chat.id)
+            if settings['auto_ffilter']:
+                await auto_filter(client, message)
             
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
