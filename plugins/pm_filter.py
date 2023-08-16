@@ -913,9 +913,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_text(
                 "<b>✨ Select the type of files you want to delete!\n\n✨ This will delete 100 files from the database for the selected type.</b>",
                 reply_markup=InlineKeyboardMarkup(btn)
-            )
-            
-   elif query.data.startswith("opnsetgrp"):
+            )        
+    elif query.data.startswith("opnsetgrp"):
         ident, grp_id = query.data.split("#")
         userid = query.from_user.id if query.from_user else None
         st = await client.get_chat_member(grp_id, userid)
